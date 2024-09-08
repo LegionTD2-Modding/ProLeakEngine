@@ -1,0 +1,44 @@
+name: Build and release
+
+on:
+  push:
+    tags:
+      - v*
+
+env:
+  LIB_NAME: ProLeakEngine
+
+jobs:
+  build-and-release:
+  
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0
+        
+    - name: Restore NuGet Packages
+      run: dotnet restore
+      
+    - name: Build Library
+      run: dotnet build --configuration Release
+      
+    - name: Zip Artifact
+      run: zip -rjD ${{ env.LIB_NAME }}.zip ${{ github.workspace }}/bin/Release/**/${{ env.LIB_NAME }}.dll
+      
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ env.LIB_NAME }} ${{ github.ref_name }}
+        artifacts: ${{ env.LIB_NAME }}.zip
+        body: |
+          Release of ${{ env.LIB_NAME }} ${{ github.ref_name }}
+        generateReleaseNotes: true
+        makeLatest: true

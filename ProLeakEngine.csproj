@@ -1,0 +1,48 @@
+
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ProLeakEngine</AssemblyName>
+    <Product>ProLeak Engine</Product>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>ProLeak</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>org.kidev.ltd2.proleak.engine</PackageId>
+    <Title>ProLeak Engine</Title>
+    <Authors>kidev</Authors>
+    <Description>ProLeak Engine: streams Legion TD2 game events to the ProLeak API</Description>
+    <Copyright>Copyright (C) 2024  Alexandre 'kidev' Poumaroux</Copyright>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/LegionTD2-Modding/ProLeakEngine</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2020.3.16" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="LICENSE" Pack="true" PackagePath="\"/>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
